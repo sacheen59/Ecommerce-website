@@ -1,0 +1,37 @@
+{% extends "client/layouts.html" %}
+{% load static %}
+
+{% block page_title %}
+Online-shop || Homepage
+{% endblock %}
+
+{% block main_content %}
+<!-- carousel content start -->
+{% include 'client/includes/carousel.html' %}
+<!-- carousel-content end  -->
+
+<!-- product container start -->
+<div class="container-fluid mt-5">
+    <h1 class="text-muted text-center mb-5">Latest Products</h1>
+    <div class="row row-cols-1 row-cols-md-4 g-4 px-3">
+        {% for product in products%}
+        <div class="col" data-aos="fade-up-right">
+          <div class="card shadow-lg">
+            <img src="/{{product.product_image}}" class="card-img-top" alt="..." height="350px">
+            <div class="card-body">
+              <h5 class="card-title">{{product.product_name}}</h5>
+              <h5 class="text-muted">Rs.{{product.product_price}}</h5>
+              <!-- <div class="d-grid"> -->
+                <a href="{% url 'product_detail' product.id %}" class="btn btn-success rounded-5 fs-5">
+                  View details
+                </a>
+              <!-- </div> -->
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+</div>
+<!-- product container end -->
+
+{% endblock %}

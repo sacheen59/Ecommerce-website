@@ -1,0 +1,63 @@
+{% extends "client/layouts.html" %}
+
+{% block page_title %}
+Online-store || MyCart
+{% endblock %}
+
+{% block main_content %}
+<!-- cart container start -->
+<div class="container-fluid">
+    <div class="d-flex justify-content-center align-items-center mt-2">
+        <div class="col-md-10">
+            {% for msg in messages%}
+            {% if msg.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+            <div class="alert alert-success">
+                {{msg}}
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% if items|length < 1 %}
+            <h1 class="text-center text-danger mt-5 p-5 shadow-lg">
+                No items in the cart
+            </h1>
+            {% else %}
+            <h1 class="text-muted text-center mb-3">Your Cart Items</h1>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Product Image</th>
+                        <th>Product Name</th>
+                        <th>Product Price</th>
+                        <th>Date added</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                    <tr>
+                        <td><img src="/{{item.product.product_image}}" alt="{{item.product.product_name}}"
+                                height="120px"></td>
+                        <td>{{item.product.product_name}}</td>
+                        <td>Rs.&nbsp;{{item.product.product_price}}</td>
+                        <td>{{item.created_date}}</td>
+                        <td>
+                            <a href="{% url 'delete_cart_items' item.id %}" class="btn btn-danger">
+                                <i class="fa-solid fa-trash"></i>&nbsp;
+                                Delete
+                            </a>&nbsp;
+                            <a href="{% url 'order' item.product.id item.id %}" class="btn btn-success">
+                                Order Now
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- cart container end -->
+
+{% endblock %}

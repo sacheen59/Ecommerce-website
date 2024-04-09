@@ -1,0 +1,61 @@
+{% extends "index.html" %}
+
+{% block page_title %}
+Admin || All-Products
+
+{% endblock %}
+
+{% block main_content %}
+<div class="container-fluid mt-4">
+    <h2 class="text-muted text-center mt-3 text-decoration-underline">
+        All Products
+    </h2>
+    {% for msg in messages %}
+    {% if msg.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{msg}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+    {% endfor %}
+    <table class="table table-bordered table-hover mx-2 mt-5">
+        <thead>
+            <tr>
+                <th>Product Image</th>
+                <th>Product Name</th>
+                <th>Product Price</th>
+                <th>Product Quantity</th>
+                <th>Category</th>
+                <th>Product Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>
+                    <img src="/{{product.product_image}}" alt="{{product.product_name}}" width="100px">
+                </td>
+                <td>{{product.product_name}}</td>
+                <td>Rs.&nbsp;{{product.product_price}}</td>
+                <td>{{product.product_quantity}}</td>
+                <td>{{product.category}}</td>
+                <td>{{ product.product_description|truncatewords_html:10 }}</td>
+                <td className="d-flex">
+                    <!-- edit button -->
+                    <a href="{% url 'update_product' product.id %}" class="btn btn-primary">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                    <!-- &nbsp; -->
+                    <!-- delete button -->
+                    <a href="{% url 'delete_product' product.id %}" class="btn btn-danger" onclick="return confirm('Are you sure want to delete this product?')">
+                        <i class="bi bi-trash-fill"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

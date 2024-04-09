@@ -1,0 +1,59 @@
+{% extends 'client/layouts.html' %}
+
+{% block page_title %}
+Online-shop || Products
+
+{% endblock %}
+
+{% block main_content%}
+
+<!-- product filter start -->
+<div class="container">
+  <div class="d-flex justify-content-center">
+    <div class="col-md-5 mt-5">
+      <form>
+        {{product_filter.form}}
+        <button class="btn btn-success" type="submit">search</button>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- product filter end -->
+
+<div class="container-fluid">
+    <!-- product-header-start -->
+    <h2 class="text-muted text-center mt-3">
+        All Products
+    </h2>
+    <!-- product-header-end -->
+
+
+    {% for msg in messages %}
+    {% if msg.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+      <div class="alert alert-danger">
+        {{msg}}
+      </div>
+    {% endif %}
+    {% endfor %}
+
+    <!-- product content start -->
+    <div class="row row-cols-1 row-cols-md-4 g-4 px-3 mt-4">
+        {% for product in products%}
+        <div class="col" data-aos="fade-up-right">
+          <div class="card shadow-lg">
+            <img src="/{{product.product_image}}" class="card-img-top" alt="..." height="350px">
+            <div class="card-body">
+              <h4 class="card-title">{{product.product_name}}</h4>
+              <h5 class="cart-text text-muted">Rs&nbsp;{{product.product_price}}</h5>
+              <a href="{% url 'product_detail' product.id %}" class="btn btn-success rounded-5 fs-5">
+                View Details
+              </a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    <!-- product content end -->
+
+</div>
+{% endblock %}

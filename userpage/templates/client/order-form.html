@@ -1,0 +1,25 @@
+{% extends "client/layouts.html" %}
+{% load crispy_forms_tags %}
+
+{% block page_title %}
+Online-store || order_form
+{% endblock %}
+
+{% block main_content %}
+<div class="container-fluid" style="height:70vh">
+    <div class="d-flex justify-content-center align-item-center mt-5">
+        <div class="col-md-4 shadow-lg p-5 rounded-5">
+            <h1 class="text-center text-muted">
+                Order Form
+            </h1>
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{form | crispy }}
+                <div class="mt-3">
+                    <input type="submit" value="Submit" class="btn btn-primary">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

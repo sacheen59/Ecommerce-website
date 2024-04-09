@@ -1,0 +1,51 @@
+{% extends "index.html" %}
+
+{% block page_title %}
+Admin || All-Category
+{% endblock %}
+
+{% block main_content %}
+<div class="container mt-4">
+    <h2 class="text-muted text-center my-4">
+        Category List
+    </h2>
+    <div class="d-flex justify-content-center">
+        <div class="col-md-6">
+            {% for msg in messages %}
+            {% if msg.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{msg}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
+            {% endfor %}
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Category Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for category in categories %}
+                    <tr>
+                        <td>{{category.category_name}}</td>
+                        <td class="d-flex justify-content-start">
+                            <!-- edit button -->
+                            <a href="{% url 'update_category' category.id %}" class="btn btn-primary">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            &nbsp; &nbsp;
+                            <!-- delete button -->
+                            <a href="{% url 'delete_category' category.id %}" class="btn btn-danger" onclick="return confirm('Are you sure want to delete this Category?')">
+                                <i class="bi bi-trash-fill"></i>
+                        </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
